@@ -4,7 +4,7 @@
  * Author: Cameron Jones
  * Author URI: https://cameronjonesweb.com.au
  * Description: Removes WordPress branding from the login page
- * Version: 0.1.2
+ * Version: 1.0.0
  * License: GPLv2
  */
 
@@ -14,7 +14,10 @@ class cameronjonesweb_white_label_login {
 
 	function __construct() {
 
-		define( 'CJW_WLL_PLUGIN_VER', '0.1.1' );
+		// Init Freemius.
+		$this->wll_fs();
+
+		define( 'CJW_WLL_PLUGIN_VER', '1.0.0' );
 
 		// Variables
 		$this->logo_max_width = apply_filters( 'white_label_login_logo_max_width', '75' );
@@ -192,6 +195,35 @@ class cameronjonesweb_white_label_login {
 	function login_body_class( $classes ) {
 		$classes[] = 'cameronjonesweb_white_label_login';
 		return $classes;
+	}
+
+	// Create a helper function for easy SDK access.
+	function wll_fs() {
+	    global $wll_fs;
+
+	    if ( ! isset( $wll_fs ) ) {
+	        // Include Freemius SDK.
+	        require_once dirname(__FILE__) . '/freemius/start.php';
+
+	        $wll_fs = fs_dynamic_init( array(
+	            'id'                => '368',
+	            'slug'              => 'white-label-login',
+	            'public_key'        => 'pk_294c05ba3233d1443bd7ae98ce8f4',
+	            'is_live'           => false,
+	            'is_premium'        => false,
+	            'has_addons'        => false,
+	            'has_paid_plans'    => false,
+	            'menu'              => array(
+	                'slug'       => 'white-label-login',
+	                'first-path' => 'plugins.php',
+	                'account'    => false,
+	                'contact'    => false,
+	                'support'    => false,
+	            ),
+	        ) );
+	    }
+
+	    return $wll_fs;
 	}
 	
 }
