@@ -1,11 +1,23 @@
 <?php
 /**
  * Plugin Name: White Label Login
+ * Plugin URI: https://cameronjonesweb.com.au/projects/white-label-login
  * Author: Cameron Jones
  * Author URI: https://cameronjonesweb.com.au
  * Description: Removes WordPress branding from the login page
  * Version: 1.0.0
  * License: GPLv2
+ * 
+ * Copyright 2016  Cameron Jones  (email : plugins@cameronjonesweb.com.au)
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License, version 2, as 
+    published by the Free Software Foundation.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
  */
 
 class cameronjonesweb_white_label_login {
@@ -18,6 +30,7 @@ class cameronjonesweb_white_label_login {
 		$this->wll_fs();
 
 		define( 'CJW_WLL_PLUGIN_VER', '1.0.0' );
+		define( 'CJW_WLL_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
 		// Variables
 		$this->logo_max_width = apply_filters( 'white_label_login_logo_max_width', '75' );
@@ -30,6 +43,10 @@ class cameronjonesweb_white_label_login {
 		add_filter( 'login_headertitle', array( $this, 'login_logo_title' ) );
 		add_filter( 'login_headerurl', array( $this, 'login_logo_url' ) );
 		add_filter( 'login_body_class', array( $this, 'login_body_class' ) );
+		add_filter( 'plugin_action_links_' . CJW_WLL_PLUGIN_BASENAME, array( $this, 'plugin_action_links' ) );
+		add_filter( 'plugin_row_meta', array( $this, 'plugin_meta_links' ), 10, 2 );
+		$this->wll_fs()->add_filter( 'connect_message_on_update', array( $this, 'freemius_landing_page_message' ), 10, 3 );
+		$this->wll_fs()->add_filter( 'connect_message', array( $this, 'freemius_landing_page_message' ), 10, 3 );
 	}
 
 	function theme_support() {
@@ -197,6 +214,18 @@ class cameronjonesweb_white_label_login {
 		return $classes;
 	}
 
+	function plugin_action_links( $links ) {
+		$links[] = '<a href="https://wordpress.org/support/plugin/white-label-login" target="_blank">Support</a>';	
+		return $links;
+	}
+
+	function plugin_meta_links( $links, $file ) {
+		if ( $file == CJW_WLL_PLUGIN_BASENAME ) {
+			$links[] = '<a href="https://profiles.wordpress.org/cameronjonesweb/#content-plugins" target="_blank">More plugins by cameronjonesweb</a>';
+		}
+		return $links;
+	}
+
 	// Create a helper function for easy SDK access.
 	function wll_fs() {
 	    global $wll_fs;
@@ -209,7 +238,7 @@ class cameronjonesweb_white_label_login {
 	            'id'                => '368',
 	            'slug'              => 'white-label-login',
 	            'public_key'        => 'pk_294c05ba3233d1443bd7ae98ce8f4',
-	            'is_live'           => false,
+	            'is_live'           => true,
 	            'is_premium'        => false,
 	            'has_addons'        => false,
 	            'has_paid_plans'    => false,
@@ -225,6 +254,15 @@ class cameronjonesweb_white_label_login {
 
 	    return $wll_fs;
 	}
+
+	function freemius_landing_page_message( $message, $user_first_name, $plugin_title ) {
+        return sprintf(
+            __fs( 'hey-x' ) . '<br>' .
+            __( 'Please help us improve %2$s by opting in to provide us with statistics on how you use %2$s on your website.', 'white-label-login' ),
+            $user_first_name,
+            '<b>' . $plugin_title . '</b>'
+        );
+    }
 	
 }
 
