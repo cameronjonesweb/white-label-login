@@ -1,8 +1,8 @@
 === White Label Login ===
 Contributors: cameronjonesweb
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=WLV5HPHSPM2BG&lc=AU&item_name=cameronjonesweb-FacebookPagePlugin&cy_code=AUD&bn=PPDonationsBFbtn_donateCC_LGgifNonHosted
-Requires at least: 4.5
-Tested up to: 4.6
+Donate link: https://patreon.com/cameronjonesweb
+Requires at least: 4.8
+Tested up to: 4.8
 Stable tag: trunk
 License: GPLv2
 License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html

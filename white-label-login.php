@@ -28,6 +28,7 @@ class cameronjonesweb_white_label_login {
 
 		// Init Freemius.
 		$this->wll_fs();
+		do_action( 'wll_fs_loaded' );
 
 		define( 'CJW_WLL_PLUGIN_VER', '1.0.0' );
 		define( 'CJW_WLL_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
@@ -235,19 +236,18 @@ class cameronjonesweb_white_label_login {
 	        require_once dirname(__FILE__) . '/freemius/start.php';
 
 	        $wll_fs = fs_dynamic_init( array(
-	            'id'                => '368',
-	            'slug'              => 'white-label-login',
-	            'public_key'        => 'pk_294c05ba3233d1443bd7ae98ce8f4',
-	            'is_live'           => true,
-	            'is_premium'        => false,
-	            'has_addons'        => false,
-	            'has_paid_plans'    => false,
-	            'menu'              => array(
-	                'slug'       => 'white-label-login',
-	                'first-path' => 'plugins.php',
-	                'account'    => false,
-	                'contact'    => false,
-	                'support'    => false,
+	            'id'                  => '1096',
+	            'slug'                => 'white-label-login',
+	            'type'                => 'plugin',
+	            'public_key'          => 'pk_61ea5be9b8ed05aa02ed77385ed8a',
+	            'is_premium'          => false,
+	            'has_addons'          => false,
+	            'has_paid_plans'      => false,
+	            'menu'                => array(
+	                'first-path'     => 'plugins.php',
+	                'account'        => false,
+	                'contact'        => false,
+	                'support'        => false,
 	            ),
 	        ) );
 	    }
